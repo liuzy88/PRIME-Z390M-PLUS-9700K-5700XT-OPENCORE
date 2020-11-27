@@ -55,7 +55,7 @@
 
 #### 安装记录
 
-* [macOS 10.12 - 11.01 Installer for CLOVER 5126 and WEPE](https://cloud.189.cn/u/daliansky)
+* [macOS 10.15 - 11.0.1 Installer for CLOVER 5126 and WEPE](https://cloud.189.cn/u/daliansky)
 
 * [macOS Big Sur 11.0.1 20B50 Installer for CLOVER 5126 and OpenCore 0.6.3 and PE](https://cloud.189.cn/u/liuzy88)
 
