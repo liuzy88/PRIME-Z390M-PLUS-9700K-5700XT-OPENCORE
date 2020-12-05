@@ -31,34 +31,34 @@
 ## EFI
 ```
 ├── BOOT                             
-│   └── BOOTx64.efi                  (必须)
+│  └── BOOTx64.efi                  (必须)
 ├── OC                               
-│   ├── ACPI                         
-│   │   ├── SSDT-AWAC.aml            (必须)修复RTC禁止AWA
-│   │   ├── SSDT-PLUG.aml            (必须)加载CPU原生电源管理 开启节能四项
-│   │   ├── SSDT-PMC.aml             开启NVRAM 原生支持的不需要
-│   │   ├── SSDT-UIAC.aml            修复USB(由hackintool生成)
-│   │   └── SSDT-EC-USBX.aml         修复USB(由hackintool生成)
-│   ├── Drivers                      
-│   │   ├── HFSPlus.efi              (必须)
-│   │   ├── OpenRuntime.efi          (必须)
-│   │   └── OpenCanopy.efi           用于加载Resources
-│   ├── Kexts                        
-│   │   ├── Lilu.kext                (必须)
-│   │   ├── WhateverGreen.kext       (必须)
-│   │   ├── AppleALC.kext            (必须)
-│   │   ├── VirtualSMC.kext          SMC
-│   │   ├── SMCProcessor.kext        SMC
-│   │   ├── SMCSuperIO.kext          SMC
-│   │   ├── IntelMausiEthernet.kext  有线网卡
-│   │   ├── RealtekRTL8111.kext      其他USB网卡
-│   │   └── USBPorts.kext            修复USB(由hackintool生成)
-│   ├── OpenCore.efi                 
-│   ├── Resources                    
-│   │   ├── Font                     
-│   │   ├── Image                    
-│   │   └── Label                    
-│   └── config.plist                 (必须)
+│  ├── ACPI                         
+│  │  ├── SSDT-AWAC.aml            (必须)修复RTC禁止AWA
+│  │  ├── SSDT-PLUG.aml            (必须)加载CPU原生电源管理 开启节能四项
+│  │  ├── SSDT-PMC.aml             开启NVRAM 原生支持的不需要
+│  │  ├── SSDT-UIAC.aml            修复USB(由hackintool生成)
+│  │  └── SSDT-EC-USBX.aml         修复USB(由hackintool生成)
+│  ├── Drivers                      
+│  │  ├── HFSPlus.efi              (必须)
+│  │  ├── OpenRuntime.efi          (必须)
+│  │  └── OpenCanopy.efi           用于加载Resources
+│  ├── Kexts                        
+│  │  ├── Lilu.kext                (必须)
+│  │  ├── WhateverGreen.kext       (必须)
+│  │  ├── AppleALC.kext            (必须)
+│  │  ├── VirtualSMC.kext          SMC
+│  │  ├── SMCProcessor.kext        SMC
+│  │  ├── SMCSuperIO.kext          SMC
+│  │  ├── IntelMausiEthernet.kext  有线网卡
+│  │  ├── RealtekRTL8111.kext      其他USB网卡
+│  │  └── USBPorts.kext            修复USB(由hackintool生成)
+│  ├── OpenCore.efi                 
+│  ├── Resources                    
+│  │  ├── Font                     
+│  │  ├── Image                    
+│  │  └── Label                    
+│  └── config.plist                 (必须)
 └── INSTALL.md                        
 ```
 
