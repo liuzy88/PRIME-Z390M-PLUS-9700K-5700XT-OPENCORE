@@ -1,6 +1,6 @@
 # OPENCORE 0.6.3
 
-> 基于`Hackintosh-Asus-Prime-Z390P_i9-9900K_RX5700XT`修改
+> 参考`Hackintosh-Asus-Prime-Z390P_i9-9900K_RX5700XT`
 
 ## BIOS
 
@@ -118,7 +118,7 @@
     PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)
 
 修改启动参数，注入声卡ID
-    -alcbate -lilubate alcid=1 agdpmod=pikera shikigva=80
+    debug=0x100 keepsyms=1 alcid=1 agdpmod=pikera shikigva=80
 
 添加自己的PlatformInfo信息
     MLB ROM SystemSerialNumber SystemUUID
@@ -155,4 +155,39 @@ USBPorts.kext
 6.复制到ACPI文件夹，在ACPI中添加SSDT-EC-USBX和SSDT-UIAC
 7.复制到Kexts文件夹，禁用USBInjectAll,XhciPortLimit=否,启用USBPorts.kext
 8.重启完成
+```
+
+
+## EFI 2
+
+> 参考`Prime-Z390m-Plus-OpenCore-Hackintosh`
+
+```
+├── BOOT                             
+│  └── BOOTx64.efi                   (必须)
+└── OC                               
+    ├── ACPI                         
+    │  ├── SSDT-AWAC.aml             (必须)修复RTC禁止AWA
+    │  ├── SSDT-PLUG-DRTNIA.aml      (必须)加载CPU原生电源管理 开启节能四项
+    │  ├── SSDT-EC-USBX-DESKTOP.aml  
+    │  └── SSDT-PMC.aml              开启NVRAM 原生支持的不需要
+    ├── Drivers                      
+    │  ├── HfsPlus.efi               (必须)
+    │  ├── OpenCanopy.efi            用于加载Resources
+    │  └── OpenRuntime.efi           (必须)
+    ├── Kexts                        
+    │  ├── AppleALC.kext             (必须)
+    │  ├── WhateverGreen.kext        (必须)
+    │  ├── Lilu.kext                 (必须)
+    │  ├── NVMeFix.kext              
+    │  ├── SMCProcessor.kext         SMC
+    │  ├── SMCSuperIO.kext           SMC
+    │  ├── VirtualSMC.kext           SMC
+    │  └── IntelMausiEthernet.kext   有线网卡
+    ├── OpenCore.efi                 
+    ├── Resources                    
+    │  ├── Font                      
+    │  ├── Image                     
+    │  └── Label                     
+    └── config.plist                 (必须)
 ```
