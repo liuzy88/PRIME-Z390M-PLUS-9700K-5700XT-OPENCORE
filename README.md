@@ -48,8 +48,10 @@
 
 >✅开机不会卡F1
 
+>✅正常关机
 
->🔥可用于Big Sur，由于某此应用不稳定暂不升级(Parallels Desktop, Nox App Player)
+
+>🔥支持：macOS Big Sur 11.0.1 (20B50)
 
 ---
 
