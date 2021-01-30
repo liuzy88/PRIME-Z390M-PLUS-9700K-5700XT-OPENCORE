@@ -191,3 +191,10 @@ USBPorts.kext
     │  └── Label                     
     └── config.plist                 (必须)
 ```
+
+# Big Sur中Parallels Desktop联网问题已解决,可以升级啦!
+```bash
+cd /Library/Preferences/Parallels
+sudo vim network.desktop.xml
+# 修改: UseKextless => 0
+```
