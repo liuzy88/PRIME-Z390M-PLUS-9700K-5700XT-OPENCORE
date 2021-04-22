@@ -34,13 +34,13 @@
 
 >✅核显驱动正常,硬解正常
 
->✅独显正常免驱(上传固件加速正常)
+>✅独显正常免驱(加设备参数后加速明显)
 
 >✅主板网口正常
 
 >✅主板3.5mm耳机口输出正常
 
->✅睡眠正常(一般直接关不睡)
+>✅睡眠正常
 
 >✅隔空投送正常,iMessage正常,FaceTime正常
 
@@ -54,9 +54,9 @@
 
 #### 安装记录
 
-* [macOS 10.15 - 11.0.1 Installer for CLOVER 5126 and WEPE](https://cloud.189.cn/u/daliansky)
+* [macOS Catalina 10.15.7(19H2) Installer for Clover 5122 and WEPE.dmg](https://cloud.189.cn/t/j6JRNzJNRB3y)
 
-* [macOS Big Sur 11.0.1 20B50 Installer for CLOVER 5126 and OpenCore 0.6.3 and PE](https://cloud.189.cn/u/liuzy88)
+* [macOS Big Sur 11.0.1 20B50 Installer for CLOVER 5126 and OpenCore 0.6.3 and PE 32G.dmg](https://cloud.189.cn/t/EfQZvuqUN7Fn)
 
 * [安装过程](./INSTALL.md)
 

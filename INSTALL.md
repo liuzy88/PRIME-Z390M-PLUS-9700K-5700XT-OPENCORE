@@ -1,7 +1,5 @@
 # OPENCORE 0.6.3
 
-> 参考`Hackintosh-Asus-Prime-Z390P_i9-9900K_RX5700XT`
-
 ## BIOS
 
 > BIOS版本 PRIME-Z390M-PLUS-ASUS-2808.CAP
@@ -11,11 +9,12 @@
         - SGX -> 禁用
         - VMX -> 启用
     - 北桥
-        - VT-d -> 禁用
+        - VT-d -> 禁用 (装完后启用)
         - 大于4G的内存解码 -> 启用
         - 显示设置
             - 首选显卡 -> 自动
             - 初始化IGPU -> 启用
+            - DVMT -> 128M
     - 内置设备
         - 串口 -> S.Port.C -> 禁用
     - USB设置
@@ -28,7 +27,10 @@
 - 工具
     - Q-Installer -> 禁用
 
-## EFI
+## OC EFI
+
+> OPENCORE版本 0.6.5
+
 ```
 ├── BOOT                             
 │  └── BOOTx64.efi                  (必须)
@@ -37,22 +39,22 @@
 │  │  ├── SSDT-AWAC.aml            (必须)修复RTC禁止AWA
 │  │  ├── SSDT-PLUG.aml            (必须)加载CPU原生电源管理 开启节能四项
 │  │  ├── SSDT-PMC.aml             开启NVRAM 原生支持的不需要
-│  │  ├── SSDT-UIAC.aml            修复USB(由hackintool生成)
 │  │  └── SSDT-EC-USBX.aml         修复USB(由hackintool生成)
 │  ├── Drivers                      
 │  │  ├── HFSPlus.efi              (必须)
 │  │  ├── OpenRuntime.efi          (必须)
 │  │  └── OpenCanopy.efi           用于加载Resources
 │  ├── Kexts                        
-│  │  ├── Lilu.kext                (必须)
-│  │  ├── WhateverGreen.kext       (必须)
 │  │  ├── AppleALC.kext            (必须)
-│  │  ├── VirtualSMC.kext          SMC
+│  │  ├── IntelMausiEthernet.kext  有线网卡
+│  │  ├── Lilu.kext                (必须)
+│  │  ├── NVMeFix.kext             NVMe增强
+│  │  ├── RealtekRTL8111.kext      其他USB网卡
 │  │  ├── SMCProcessor.kext        SMC
 │  │  ├── SMCSuperIO.kext          SMC
-│  │  ├── IntelMausiEthernet.kext  有线网卡
-│  │  ├── RealtekRTL8111.kext      其他USB网卡
-│  │  └── USBPorts.kext            修复USB(由hackintool生成)
+│  │  ├── USBPorts.kext            修复USB(由hackintool生成)
+│  │  ├── VirtualSMC.kext          SMC
+│  │  └── WhateverGreen.kext       (必须)
 │  ├── OpenCore.efi                 
 │  ├── Resources                    
 │  │  ├── Font                     
@@ -64,50 +66,27 @@
 
 ## CONFIG
 
-```
-### ACPI
-|-------------------|--------|-------|---------|
-|        Add        | Delete | Patch |  Quirks |
-|-------------------|--------|-------|---------|
-| 看目录结构中的aml | 空     | 空    | 全false |
-### Booter
-|---------------|--------|
-| MmioWhitelist | Quirks |
-|---------------|--------|
-| 空            |        |
-### DeviceProperties
-|--------------|--------|
-|     Add      | Quirks |
-|--------------|--------|
-| 核显         |        |
-| 独显         |        |
-| 其他PCIe设备 |        |
-### Kernel
-|-----|-------|---------|-------|-------|--------|--------|
-| Add | Block | Emulate | Force | Patch | Quirks | Scheme |
-|-----|-------|---------|-------|-------|--------|--------|
-| 空  | 空    |         | 空    |       |        |        |
-### Misc
-|---------------|------|-------|---------|----------|-------|
-| BlessOverride | Boot | Debug | Entries | Security | Tools |
-|---------------|------|-------|---------|----------|-------|
-| 空            |      |       | 空      |          | 空    |
-### NVRAM
-|-----|--------|--------------|-----------------|--------------|------------|
-| Add | Delete | LegacyEnable | LegacyOverwrite | LegacySchema | WriteFlash |
-|-----|--------|--------------|-----------------|--------------|------------|
-| 空  |        |              |                 |              |            |
-### PlatformInfo
-|-----------|--------------|---------|---------------|-------------|--------------|------------------|
-| Automatic | CustomMemory | Generic | UpdateDataHub | UpdateNVRAM | UpdateSMBIOS | UpdateSMBIOSMode |
-|-----------|--------------|---------|---------------|-------------|--------------|------------------|
-| 空        |              |         |               |             |              |                  |
-### UEFI
-|------|-------|----------------|---------|-------|--------|-------------------|--------|----------------|
-| APFS | Audio | ConnectDrivers | Drivers | Input | Output | ProtocolOverrides | Quirks | ReservedMemory |
-|------|-------|----------------|---------|-------|--------|-------------------|--------|----------------|
-| 空   |       |                |         |       |        |                   |        | 空             |
-```
+> 以快为主
+
+- ACPI
+  - `SSDT-EC-USBX-DESKTOP.aml`和`USBPorts.kext`启用其中之一
+- Booter
+  - 取消日志
+- DeviceProperties
+  - 核显PciRoot(0x0)/Pci(0x2,0x0)
+  - 独显PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)
+  - 声卡PciRoot(0x0)/Pci(0x1F,0x3)
+- Kernel
+  - 有了`USBPorts.kext`就不需要`XhciPortLimit`
+- Misc
+  - Builtin
+  - 扫描策略2621699不要显示Windows
+- NVRAM
+  - 注入三码加速引导
+- PlatformInfo
+  - 自己生成三码
+- UEFI
+  - 仅3个
 
 ## STEP
 
@@ -119,12 +98,14 @@
 
 修改启动参数，注入声卡ID
     debug=0x100 keepsyms=1 alcid=1 agdpmod=pikera shikigva=80
+    确定没问题后，声卡ID用DeviceProperties注入效率更高
 
 添加自己的PlatformInfo信息
     MLB ROM SystemSerialNumber SystemUUID
 
 修改SystemUUID同步Windows，使用命令
     ioreg -d2 -c IOPlatformExpertDevice | awk -F\" '/IOPlatformUUID/{print $(NF-1)}'
+    888153AA-9716-5B0D-8A5D-F0BDDBC820E3
 ```
 
 ## USBX
@@ -157,40 +138,6 @@ USBPorts.kext
 8.重启完成
 ```
 
-
-## EFI 2
-
-> 参考`Prime-Z390m-Plus-OpenCore-Hackintosh`
-
-```
-├── BOOT                             
-│  └── BOOTx64.efi                   (必须)
-└── OC                               
-    ├── ACPI                         
-    │  ├── SSDT-AWAC.aml             (必须)修复RTC禁止AWA
-    │  ├── SSDT-PLUG-DRTNIA.aml      (必须)加载CPU原生电源管理 开启节能四项
-    │  ├── SSDT-EC-USBX-DESKTOP.aml  
-    │  └── SSDT-PMC.aml              开启NVRAM 原生支持的不需要
-    ├── Drivers                      
-    │  ├── HfsPlus.efi               (必须)
-    │  ├── OpenCanopy.efi            用于加载Resources
-    │  └── OpenRuntime.efi           (必须)
-    ├── Kexts                        
-    │  ├── AppleALC.kext             (必须)
-    │  ├── WhateverGreen.kext        (必须)
-    │  ├── Lilu.kext                 (必须)
-    │  ├── NVMeFix.kext              
-    │  ├── SMCProcessor.kext         SMC
-    │  ├── SMCSuperIO.kext           SMC
-    │  ├── VirtualSMC.kext           SMC
-    │  └── IntelMausiEthernet.kext   有线网卡
-    ├── OpenCore.efi                 
-    ├── Resources                    
-    │  ├── Font                      
-    │  ├── Image                     
-    │  └── Label                     
-    └── config.plist                 (必须)
-```
 
 # Big Sur中Parallels Desktop联网问题已解决,可以升级啦!
 ```bash
